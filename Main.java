@@ -1,4 +1,4 @@
-package gui;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,8 +9,13 @@ import dataStructures.Player;
 
 import java.util.ArrayList;
 
-public class JFmenu extends JFrame {
-
+public class Main extends JFrame {
+	
+	// *****************************************************************
+	// *  Fields
+	// *****************************************************************
+	
+	//Main panel
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -39,7 +44,7 @@ public class JFmenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFmenu frame = new JFmenu();
+					Main frame = new Main();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +56,7 @@ public class JFmenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JFmenu() {
+	public Main() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1900, 1000); //1000
 		contentPane = new JPanel();
@@ -197,8 +202,8 @@ public class JFmenu extends JFrame {
 				Player_3 = textField_2.getText();
 				Player_4 = textField_3.getText();
 				createPlayers(numofPlayer);
-				//new WinnerGUI("yo mama");
-				new GameGUI(playerList);
+				
+				//GameGUI boardWindow = new GameGUI(playerList);
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -208,10 +213,10 @@ public class JFmenu extends JFrame {
 	public void createPlayers(int k){
 		playerList.clear();
 		
-		Player P1 = new Player("Player_1",1);
-		Player P2 = new Player("Player_2",2);
-		Player P3 = new Player("Player_3",3);
-		Player P4 = new Player("Player_4",4);
+		Player P1 = new Player(Player_1,1);
+		Player P2 = new Player(Player_2,2);
+		Player P3 = new Player(Player_3,3);
+		Player P4 = new Player(Player_4,4);
 		
 		playerList.add(P1);
 		playerList.add(P2);

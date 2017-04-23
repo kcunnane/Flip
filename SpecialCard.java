@@ -2,6 +2,8 @@ package dataStructures;
 
 import javax.swing.ImageIcon;
 
+import com.sun.xml.internal.bind.v2.runtime.output.FastInfosetStreamWriterOutput;
+
 public class SpecialCard extends Card{
 	
 	//A String name for the rule that the special card applies to. The board class/whatever class keeps track of taking turns will check for the rules
@@ -23,6 +25,7 @@ public class SpecialCard extends Card{
 	 * @param color
 	 */
 	public SpecialCard(ImageIcon front, String name, String rule){
+		System.out.println("fffffffffffin special card constructer");
 		super(front, name, 0);
 		setRule(rule.toLowerCase());
 		if(this.rule.equals("skip") || this.rule.equals("reverse")){
