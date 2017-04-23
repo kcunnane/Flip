@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.text.*;
 
 import dataStructures.Player;
 
@@ -53,13 +54,13 @@ public class JFmenu extends JFrame {
 	 */
 	public JFmenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1900, 1000); //1000
+		setBounds(0, 0, 1900, 1000); //1000
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		contentPane.setBackground(Color.YELLOW);
+		contentPane.setBackground(Color.PINK);
 		
 		ButtonGroup btg1 = new ButtonGroup();
 		btg1.add(rdbtnPlayers_1);
@@ -75,10 +76,6 @@ public class JFmenu extends JFrame {
 		lblMenulablename.setFont(new Font("Georgia", Font.PLAIN, 36));
 		lblMenulablename.setBounds(478, 189, 386, 75);
 		contentPane.add(lblMenulablename);
-		
-		
-		
-		
 		
 		JLabel lblPlayer = new JLabel("Name of Player 1");
 		lblPlayer.setFont(new Font("Tahoma", Font.PLAIN, 26));
@@ -104,33 +101,42 @@ public class JFmenu extends JFrame {
 		lblNameOfPlayer_2.setVisible(false);
 		contentPane.add(lblNameOfPlayer_2);
 		
-		textField = new JTextField();
-		textField.setBounds(821, 321, 252, 36);
+		textField = new JTextField(10);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField.setDocument(new JTextFieldCharLimit(10));
 		textField.setVisible(false);
+		textField.setBounds(821, 321, 252, 36);
 		contentPane.add(textField);
-		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		textField_1 = new JTextField(10);
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField_1.setDocument(new JTextFieldCharLimit(10));
 		textField_1.setVisible(false);
 		textField_1.setBounds(821, 375, 252, 36);
 		contentPane.add(textField_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		textField_2 = new JTextField(10);
+		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField_2.setDocument(new JTextFieldCharLimit(10));
 		textField_2.setVisible(false);
 		textField_2.setBounds(821, 426, 252, 36);
 		contentPane.add(textField_2);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
+		textField_3 = new JTextField(10);
+		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField_3.setDocument(new JTextFieldCharLimit(10));
 		textField_3.setVisible(false);
 		textField_3.setBounds(822, 477, 252, 36);
 		contentPane.add(textField_3);
 		
 		JRadioButton rdbtnPlayers = new JRadioButton("2 Players");
-		rdbtnPlayers.setBackground(Color.YELLOW);
+		rdbtnPlayers.setBackground(Color.pink);
+		rdbtnPlayers.setSelected(true);
 		btg1.add(rdbtnPlayers);
+		lblPlayer.setVisible(true);
+		lblNameOfPlayer.setVisible(true);
+		textField.setVisible(true);
+		textField_1.setVisible(true);
 		rdbtnPlayers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblPlayer.setVisible(true);
@@ -150,7 +156,7 @@ public class JFmenu extends JFrame {
 		
 		
 		JRadioButton rdbtnPlayers_1 = new JRadioButton("3 Players");
-		rdbtnPlayers_1.setBackground(Color.YELLOW);
+		rdbtnPlayers_1.setBackground(Color.pink);
 		rdbtnPlayers_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblPlayer.setVisible(true);
@@ -170,7 +176,7 @@ public class JFmenu extends JFrame {
 		contentPane.add(rdbtnPlayers_1);
 		
 		JRadioButton rdbtnPlayers_2 = new JRadioButton("4 Players");
-		rdbtnPlayers_2.setBackground(Color.YELLOW);
+		rdbtnPlayers_2.setBackground(Color.pink);
 		rdbtnPlayers_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblPlayer.setVisible(true);
@@ -192,10 +198,18 @@ public class JFmenu extends JFrame {
 		JButton btnNewButton = new JButton("Start Game");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Player_1 = textField.getText();
-				Player_2 = textField_1.getText();
-				Player_3 = textField_2.getText();
-				Player_4 = textField_3.getText();
+				if(textField.getText().length() != 0){
+					Player_1 = textField.getText();
+				}
+				if(textField_1.getText().length() != 0){
+					Player_2 = textField_1.getText();
+				}
+				if(textField_2.getText().length() != 0){
+					Player_3 = textField_2.getText();
+				}
+				if(textField_3.getText().length() != 0){
+					Player_4 = textField_3.getText();
+				}
 				createPlayers(numofPlayer);
 				//new WinnerGUI("yo mama");
 				new GameGUI(playerList);
@@ -208,10 +222,45 @@ public class JFmenu extends JFrame {
 	public void createPlayers(int k){
 		playerList.clear();
 		
-		Player P1 = new Player("Player_1",1);
-		Player P2 = new Player("Player_2",2);
-		Player P3 = new Player("Player_3",3);
-		Player P4 = new Player("Player_4",4);
+		int filler;
+		String spaces = "";
+		if (Player_1.length() < 10) {
+			filler = 10 - Player_1.length();
+			for (int i = 0; i < filler; i++) {
+				spaces += " ";
+			}
+			Player_1 += spaces;
+		}
+		spaces = "";
+		if (Player_2.length() < 10) {
+			filler = 10 - Player_2.length();
+			for (int i = 0; i < filler; i++) {
+				spaces += " ";
+			}
+			Player_2 += spaces;
+		}
+		spaces = "";
+		if (Player_3.length() < 10) {
+			filler = 10 - Player_3.length();
+			for (int i = 0; i < filler; i++) {
+				spaces += " ";
+			}
+			Player_3 += spaces;
+		}
+		spaces = "";
+		if (Player_4.length() < 10) {
+			filler = 10 - Player_4.length();
+			for (int i = 0; i < filler; i++) {
+				spaces += " ";
+			}
+			Player_4 += spaces;
+		}
+		spaces = "";
+		
+		Player P1 = new Player(Player_1, 1);
+		Player P2 = new Player(Player_2, 2);
+		Player P3 = new Player(Player_3, 3);
+		Player P4 = new Player(Player_4, 4);
 		
 		playerList.add(P1);
 		playerList.add(P2);

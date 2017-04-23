@@ -28,7 +28,6 @@ public class Board {
 	public Board(int numOfPlayers){
 		height = 8;
 		width = 2 * numOfPlayers - 1;
-		
 		cardBoard = new Card[width][height];
 		createCards(numOfPlayers);
 		if(numOfPlayers == 2){
@@ -46,6 +45,7 @@ public class Board {
 	 * @param numOfPlayers
 	 */
 	private void createCards(int numOfPlayers){
+		cardList = new ArrayList<Card>();
 		if(numOfPlayers == 2){
 			//4 pair purple
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Purple/purple1.png"), "P1", "purple"));
@@ -115,7 +115,9 @@ public class Board {
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue1.png"), "B1", "blue"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue1.png"), "B1", "blue"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue2.png"), "B2", "blue"));
+			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue2.png"), "B2", "blue"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue3.png"), "B3", "blue"));
+			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue4.png"), "B4", "blue"));
 			
 			//1 skip
 			cardList.add(new SpecialCard(new ImageIcon("src/Cards/Special/skip1.png"), "S1", "skip"));
@@ -316,5 +318,35 @@ public class Board {
 	 */
 	public int getScoreFromCard(int x, int y){
 		return cardBoard[x][y].getScore();
+	}
+	
+	/**Width getter--
+	 * Output: int of width of board
+	 * 
+	 * @return
+	 */
+	public int getWidth(){
+		return width;
+	}
+	
+	/**
+	 * Height getter--
+	 * Output: height of board
+	 * @return
+	 */
+	public int getHeight(){
+		return height;
+	}
+	
+	/**Returns if a particular card is flipped--
+	 * Input: an x and y location for the card
+	 * Output: the boolean if it is flipped or not
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean isFlipped(int x, int y){
+		return cardBoard[x][y].isFlipped();
 	}
 }

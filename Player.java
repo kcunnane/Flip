@@ -1,3 +1,5 @@
+package dataStructures;
+
 public class Player{
 	public String name;		//player's name
 	public int score;		//player's score

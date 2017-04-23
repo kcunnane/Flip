@@ -12,6 +12,9 @@ public class WinnerGUI extends JFrame {
 	JLabel mainLabel = new JLabel("Congrats!");
 	JPanel congratsPanel = new JPanel();
 	JLabel champion;
+	JPanel fireworksPanel = new JPanel();
+	ImageIcon fireworks = new ImageIcon("src/Cards/fireworks.png");
+	JLabel firework = new JLabel("", fireworks, JLabel.CENTER);
 	
 	public WinnerGUI(String winner) {
 		super("Flipp");
@@ -22,15 +25,19 @@ public class WinnerGUI extends JFrame {
 		System.out.println("winner is " + winner);
 		
 		mainPanel.setLayout(new BorderLayout());
+		mainLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		headerPanel.add(mainLabel);
 		mainPanel.add(headerPanel, BorderLayout.NORTH);
 		
 		champion = new JLabel(winner + " is the winner!");
+		champion.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		congratsPanel.setLayout(new FlowLayout());
 		congratsPanel.add(champion);
 		mainPanel.add(congratsPanel, BorderLayout.CENTER);
 		
+		fireworksPanel.add(firework);
 		
+		mainPanel.add(fireworksPanel, BorderLayout.SOUTH);
 		add(mainPanel);
 		setVisible(true);
 	}

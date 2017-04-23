@@ -15,12 +15,10 @@ public class GameGUI extends JFrame{
 	
 	//North Panel of mainPanel
 	private JPanel headerPanel = new JPanel();
-	private JLabel headerLabel = new JLabel("flip", JLabel.CENTER);
+	private JLabel headerLabel = new JLabel("Flipp!", JLabel.CENTER);
 	
 	//Center Panel of mainPanel
 	private JPanel boardPanel = new JPanel();
-		//load images here
-	private JPanel cardsPanel = new JPanel();	//grid layout
 	
 	//East Panel of mainPanel
 	private JPanel scorePanel = new JPanel();
@@ -37,6 +35,7 @@ public class GameGUI extends JFrame{
 	//South Panel of mainPanel
 	private JPanel confirmPanel = new JPanel();
 	private JButton confirm;
+	private JTextField whosup;
 	
 	private int x1;
 	private int y1;
@@ -61,12 +60,17 @@ public class GameGUI extends JFrame{
 	// *****************************************************************	
 	
 	public GameGUI(ArrayList<Player> players) {
-		super("Flip");
-		setSize(1000,1000);
-		setBounds(0, 0, 1200, 1030);
+		super("Flipp!");
+		setSize(1250, 535 + (players.size() - 2) * 250);
+		
 		setLocationRelativeTo(null);
-		//setResizable(false);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		headerPanel.setBackground(Color.PINK);
+		boardPanel.setBackground(Color.PINK);
+		scorePanel.setBackground(Color.PINK);
+		playerPanel.setBackground(Color.PINK);
+		confirmPanel.setBackground(Color.PINK);
 		
 		this.players = players;
 		
@@ -75,6 +79,7 @@ public class GameGUI extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		
 		//**create headerPanel
+		headerLabel.setFont(new Font("Tahoma", Font.BOLD, 32));
 		headerPanel.add(headerLabel);
 		
 		//**create boardPanel
@@ -82,6 +87,10 @@ public class GameGUI extends JFrame{
 		int cols = brd.getWidth();
 		selected = 0;
 		boardPanel.setLayout(new FlowLayout());
+		
+		//**creates player up Text Field
+		whosup = new JTextField(players.get(currPlayer).getName());
+		confirmPanel.add(whosup,BorderLayout.SOUTH);
 		
 		//Special Card Indicators
 		confirm = new JButton("End Turn");
@@ -92,36 +101,33 @@ public class GameGUI extends JFrame{
 			System.out.println("player " + (currPlayer+1) + " just went");
 			System.out.println();
 			String r = brd.getRuleFromCards(x1, y1, x2, y2);
-			if(r.contains("reverse")){
-				forwards ^= true;
+			if(x1 == x2 && y1 == y2){
+				System.out.println("same card was selected");
 			}
-			if(r.contains("skip")){
-				incrementTurn();
-			}
-			if(r.contains("bonus")){
-				if(r.indexOf("bonus") == 0){
-					players.get(currPlayer).addToScore(brd.getScoreFromCard(x1, y1));
-				}else{
-					players.get(currPlayer).addToScore(brd.getScoreFromCard(x2, y2));
+			else{
+				if(r.contains("reverse")){
+					forwards ^= true;
 				}
-			}
-			if(r.contains("minus")){
-				if(r.indexOf("minus") == 0){
-					players.get(currPlayer).addToScore(brd.getScoreFromCard(x1, y1));
-				}else{
-					players.get(currPlayer).addToScore(brd.getScoreFromCard(x2, y2));
+				if(r.contains("skip")){
+					incrementTurn();
 				}
+				if(r.contains("bonus")){
+					players.get(currPlayer).addToScore(4);
+				}
+				
+				if(r.contains("minus")){
+					players.get(currPlayer).addToScore(-4);
+				}
+				if(r.contains("deathdeath")){
+					players.get(currPlayer).setStillInGame();
+				}
+				players.get(currPlayer).addToScore(brd.select(x1, y1, x2, y2));
 			}
-			if(r.contains("death")){
-				players.get(currPlayer).setStillInGame();
-			}
-			//boardButton[x1][y1].setEnabled(false);
-			//boardButton[x2][y2].setEnabled(false);
+			
 			incrementTurn();
-			players.get(currPlayer).addToScore(brd.select(x1, y1, x2, y2));
+		
 			updateBoardWithCorrectImages(x1, y1, x2, y2);
 			updateScorePanel(currPlayer);
-			//updateBoardWithCorrectImages();
 			
 			if (brd.getNumPairs() <= 0) {
 				new WinnerGUI(determineWinner());
@@ -142,16 +148,11 @@ public class GameGUI extends JFrame{
 			//OPEN END GAME WINDOW
 		});*/
 		
-		
-		
-		
 		//Initializes things on screen
 		createBoardButtons();
 		createScorePanel();
 		Random r = new Random();
 		currPlayer = 0; //r.nextInt(players.size());
-		
-		
 		
 		//**add panels to mainPanel
 		mainPanel.add(headerPanel, BorderLayout.NORTH);
@@ -159,6 +160,10 @@ public class GameGUI extends JFrame{
 		mainPanel.add(scorePanel, BorderLayout.EAST);
 		mainPanel.add(confirmPanel, BorderLayout.SOUTH);
 
+		//DO THE THINGS
+		playerOneName.setBackground(new Color(180, 255, 255));
+		
+		
 		add(mainPanel);
 		setVisible(true);
 		
@@ -183,6 +188,8 @@ public class GameGUI extends JFrame{
 		} else {
 			confirm.setEnabled(true);
 		}
+		whosup.setText(players.get(currPlayer).getName());
+		playerup();
 	}
 	
 	/**Updates the scorePanel on the board the names and scores and puts them on the scorePanel
@@ -194,26 +201,42 @@ public class GameGUI extends JFrame{
 		scorePanel.setLayout(new GridLayout(players.size(), 0, -7, -7));
 		playerPanel.setLayout(new BorderLayout());
 		
+		//**add player 1
 		playerOneName = new JButton(players.get(0).getName());
+		playerOneName.setFont(new Font("Courier", Font.PLAIN, 16));
+		playerOneName.setEnabled(false);
 		String score1 = Integer.toString(players.get(0).getScore()); 
 		playerOneScore = new JButton(score1);
+		playerOneScore.setEnabled(false);
 		scorePanel.add(playerOneName);
 		scorePanel.add(playerOneScore);
+		//**add player 2
 		playerTwoName = new JButton(players.get(1).getName());
+		playerTwoName.setFont(new Font("Courier", Font.PLAIN, 16));
+		playerTwoName.setEnabled(false);
 		String score2 = Integer.toString(players.get(1).getScore()); 
 		playerTwoScore = new JButton(score2);
+		playerTwoScore.setEnabled(false);
 		scorePanel.add(playerTwoName);
 		scorePanel.add(playerTwoScore);
+		
+		//**add player 3 and 4
 		if (players.size() >= 3) {
 			playerThreeName = new JButton(players.get(2).getName());
+			playerThreeName.setFont(new Font("Courier", Font.PLAIN, 16));
+			playerThreeName.setEnabled(false);
 			String score3 = Integer.toString(players.get(2).getScore()); 
 			playerThreeScore = new JButton(score3);
+			playerThreeScore.setEnabled(false);
 			scorePanel.add(playerThreeName);
 			scorePanel.add(playerThreeScore);
 		} if (players.size() == 4) {
 			playerFourName = new JButton(players.get(3).getName());
+			playerFourName.setFont(new Font("Courier", Font.PLAIN, 16));
+			playerFourName.setEnabled(false);
 			String score4 = Integer.toString(players.get(3).getScore()); 
 			playerFourScore = new JButton(score4);
+			playerFourScore.setEnabled(false);
 			scorePanel.add(playerFourName);
 			scorePanel.add(playerFourScore);
 		}
@@ -296,5 +319,64 @@ public class GameGUI extends JFrame{
 			}
 		}
 		return largest.getName();
+	}
+public void playerup(){
+		
+		if(players.size() == 2){
+			if(currPlayer+1 == 1){
+				playerOneName.setBackground(new Color(180, 255, 255));
+				playerTwoName.setBackground(null);
+				
+			}
+			if(currPlayer+1 == 2){
+				playerOneName.setBackground(null);
+				playerTwoName.setBackground(new Color(180, 255, 255));
+			}
+			
+		}
+		if(players.size() == 3){
+			if(currPlayer+1 == 1){
+				playerOneName.setBackground(new Color(180, 255, 255));
+				playerTwoName.setBackground(null);
+				playerThreeName.setBackground(null);
+			}
+			if(currPlayer+1 == 2){
+				playerOneName.setBackground(null);
+				playerTwoName.setBackground(new Color(180, 255, 255));
+				playerThreeName.setBackground(null);
+			}
+			if(currPlayer+1 == 3){
+				playerOneName.setBackground(null);
+				playerTwoName.setBackground(null);
+				playerThreeName.setBackground(new Color(180, 255, 255));
+			}
+			
+		}
+		if(players.size() == 4){
+			if(currPlayer+1 == 1){
+				playerOneName.setBackground(new Color(180, 255, 255));
+				playerTwoName.setBackground(null);
+				playerThreeName.setBackground(null);
+				playerFourName.setBackground(null);
+			}
+			if(currPlayer+1 == 2){
+				playerOneName.setBackground(null);
+				playerTwoName.setBackground(new Color(180, 255, 255));
+				playerThreeName.setBackground(null);
+				playerFourName.setBackground(null);
+			}
+			if(currPlayer+1 == 3){
+				playerOneName.setBackground(null);
+				playerTwoName.setBackground(null);
+				playerThreeName.setBackground(new Color(180, 255, 255));
+				playerFourName.setBackground(null);
+			}
+			if(currPlayer+1 == 4){
+				playerOneName.setBackground(null);
+				playerTwoName.setBackground(null);
+				playerThreeName.setBackground(null);
+				playerFourName.setBackground(new Color(180, 255, 255));
+			}
+		}
 	}
 }
