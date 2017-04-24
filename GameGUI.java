@@ -107,6 +107,7 @@ public class GameGUI extends JFrame{
 			else{
 				if(r.contains("reverse")){
 					forwards ^= true;
+					
 				}
 				if(r.contains("skip")){
 					incrementTurn();
@@ -300,6 +301,7 @@ public class GameGUI extends JFrame{
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
 				boardButton[i][j].setIcon(brd.getImageFromCard(j, i));
+				
 			}
 		}
 	}

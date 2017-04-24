@@ -17,6 +17,7 @@ public class JFmenu extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	RulesGUI rule;
 	JLabel lblPlayer;
 	JLabel lblNameOfPlayer;
 	JLabel lblNameOfPlayer_1;
@@ -212,12 +213,24 @@ public class JFmenu extends JFrame {
 				}
 				createPlayers(numofPlayer);
 				//new WinnerGUI("yo mama");
+				setVisible(false);
 				new GameGUI(playerList);
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnNewButton.setBounds(736, 563, 200, 63);
+		btnNewButton.setBounds(911, 580, 200, 63);
 		contentPane.add(btnNewButton);
+		
+		JButton btnRules = new JButton("Rules");
+		btnRules.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rule = new RulesGUI();
+				rule.setAlwaysOnTop(true);
+			}
+		});
+		btnRules.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnRules.setBounds(664, 580, 200, 63);
+		contentPane.add(btnRules);
 	}
 	public void createPlayers(int k){
 		playerList.clear();

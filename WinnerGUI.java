@@ -9,31 +9,28 @@ public class WinnerGUI extends JFrame {
 	
 	JPanel mainPanel = new JPanel();
 	JPanel headerPanel = new JPanel();
-	JLabel mainLabel = new JLabel("Congrats!");
-	JPanel congratsPanel = new JPanel();
-	JLabel champion;
+	JLabel mainLabel;
 	JPanel fireworksPanel = new JPanel();
 	ImageIcon fireworks = new ImageIcon("src/Cards/fireworks.png");
 	JLabel firework = new JLabel("", fireworks, JLabel.CENTER);
 	
 	public WinnerGUI(String winner) {
-		super("Flipp");
+		super("Flipp!");
 		setSize(600,450);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		System.out.println("winner is " + winner);
+		
+		mainPanel.setBackground(Color.BLACK);
+		headerPanel.setBackground(Color.BLACK);
+		fireworksPanel.setBackground(Color.BLACK);
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		mainLabel = new JLabel("Congrats, " + winner + " is the winner!");
+		mainLabel.setForeground(Color.PINK);
+		mainLabel.setFont(new Font("Tahoma", Font.BOLD, 23));
 		headerPanel.add(mainLabel);
 		mainPanel.add(headerPanel, BorderLayout.NORTH);
-		
-		champion = new JLabel(winner + " is the winner!");
-		champion.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		congratsPanel.setLayout(new FlowLayout());
-		congratsPanel.add(champion);
-		mainPanel.add(congratsPanel, BorderLayout.CENTER);
 		
 		fireworksPanel.add(firework);
 		

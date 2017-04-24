@@ -172,15 +172,15 @@ public class Board {
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Yellow/yellow4.png"), "Y4", "yellow"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Yellow/yellow4.png"), "Y4", "yellow"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Yellow/yellow5.png"), "Y5", "yellow"));
-			cardList.add(new ColorCard(new ImageIcon("src/Cards/Yellow/yellow5.png"), "Y5", "yellow"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Yellow/yellow6.png"), "Y6", "yellow"));
-			cardList.add(new ColorCard(new ImageIcon("src/Cards/Yellow/yellow7.png"), "Y7", "yellow"));
 			//2 pair 3 single blue
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue1.png"), "B1", "blue"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue1.png"), "B1", "blue"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue2.png"), "B2", "blue"));
+			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue2.png"), "B2", "blue"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue3.png"), "B3", "blue"));
 			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue4.png"), "B4", "blue"));
+			cardList.add(new ColorCard(new ImageIcon("src/Cards/Blue/blue5.png"), "B5", "blue"));
 			
 			//2 skip
 			cardList.add(new SpecialCard(new ImageIcon("src/Cards/Special/skip1.png"), "S1", "skip"));
