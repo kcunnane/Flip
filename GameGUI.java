@@ -64,7 +64,7 @@ public class GameGUI extends JFrame{
 		setSize(1250, 535 + (players.size() - 2) * 250);
 		
 		setLocationRelativeTo(null);
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		headerPanel.setBackground(Color.PINK);
 		boardPanel.setBackground(Color.PINK);
@@ -275,15 +275,20 @@ public class GameGUI extends JFrame{
 				boardButton[i][j].addActionListener(e -> {
 					if(selected < 2){
 						boardButton[ci][cj].setIcon(brd.displayCard(cj, ci));
+						boardButton[ci][cj].setEnabled(!brd.isFlipped(cj, ci));
 					}
 					selected++;
 					if(selected == 1){
 						x1 = cj;
 						y1 = ci;
 					}else if(selected == 2){
-						confirm.setEnabled(true);
 						x2 = cj;
 						y2 = ci;
+						if(!(x1 == x2 && y1 == y2)){
+							confirm.setEnabled(true);
+						}else{
+							selected--;
+						}
 					}
 				});
 				boardPanel.add(boardButton[i][j]);
