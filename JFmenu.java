@@ -212,7 +212,6 @@ public class JFmenu extends JFrame {
 					Player_4 = textField_3.getText();
 				}
 				createPlayers(numofPlayer);
-				//new WinnerGUI("yo mama");
 				setVisible(false);
 				new GameGUI(playerList);
 			}
