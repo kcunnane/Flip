@@ -43,16 +43,16 @@ public class RulesGUI extends JFrame {
 		
 		JTextArea txtrFlipDescriptionThe = new JTextArea();
 		txtrFlipDescriptionThe.setFont(new Font("Monospaced", Font.PLAIN, 15));
-		txtrFlipDescriptionThe.setText("Flip\r\nDescription:\r\nThe game starts with a set number of cards\n"
+		txtrFlipDescriptionThe.setText("Flip\r\nDescription:\r\nThe game starts with a set number of cards based on the number of players\n"
 				+ "all face down, each turn a player will select two cards to turn over,\n"
-				+ "if they are pairs you keep them face up and add your score. If the cards were\n"
+				+ "if they are pairs you keep them face up and add to your score. If the cards were\n"
 				+ "not a pair then the cards are flipped back to face down. \r\n"
 				+ "\r\nObjective:\r\n"
 				+ "The goal is to remember the location of pairs and turn them over to get points,\n"
 				+ "to win one must end the game with the most amount of points.\r\n"
 				+ "\r\nHow to play\r\n"
 				+ "1.\tSelect the Size (based off given sizes), number of players that are playing \r\n"
-				+ "2.\tDecide who goes first by a roll of the dice\r\n"
+				+ "2.\tPlayer one will go first\r\n"
 				+ "3.\tFirst person should select two cards\r\n"
 				+ "\ta.\tIf it\u2019s a match then that person gets a point and the cards\n"
 				+ "			are left face up and they go again\r\n"
